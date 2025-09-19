@@ -1,7 +1,9 @@
 package br.ufpb.dsc.cinema_api.controllers;
 
+import br.ufpb.dsc.cinema_api.dtos.FilmeDTO;
 import br.ufpb.dsc.cinema_api.dtos.UsuarioDTO;
 import br.ufpb.dsc.cinema_api.dtos.UsuarioResponseDTO;
+import br.ufpb.dsc.cinema_api.models.Filme;
 import br.ufpb.dsc.cinema_api.models.Usuario;
 import br.ufpb.dsc.cinema_api.service.UsuarioService;
 import jakarta.validation.Valid;

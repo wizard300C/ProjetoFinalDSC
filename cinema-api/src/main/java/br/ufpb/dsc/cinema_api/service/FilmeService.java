@@ -45,6 +45,11 @@ public class FilmeService {
                 .orElseThrow(() -> new FilmeNotFoundException("Filme" + filmeID + "não encontrado"));
     }
 
+    public Filme buscarFilmePorNome(String nomeFilme) {
+        return filmeRepository.findByNomeFilme(nomeFilme)
+                .orElseThrow(() -> new FilmeNotFoundException("Filme com o nome" + nomeFilme + "não encontrado."));
+    }
+
     public Filme atualizarFilme(Long filmeID, Filme filme) {
         Filme f = filmeRepository.findById(filmeID)
                 .orElseThrow(() -> new FilmeNotFoundException("Filme" + filmeID + "não encontrado"));
