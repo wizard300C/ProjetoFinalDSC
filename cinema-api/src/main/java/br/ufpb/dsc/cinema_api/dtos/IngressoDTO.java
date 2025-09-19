@@ -3,6 +3,7 @@ package br.ufpb.dsc.cinema_api.dtos;
 import br.ufpb.dsc.cinema_api.models.Sessao;
 import br.ufpb.dsc.cinema_api.models.Usuario;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -21,8 +22,10 @@ public class IngressoDTO {
     @Size(min = 4, message = "O nome do assento não pode ter mais de 4 caractere")
     private String assento;
 
+    @NotNull(message = "O usuário não pode ser nulo!")
     private Usuario usuario;
 
+    @NotNull(message = "A sessão não pode ser nula!")
     private Sessao sessao;
 
 }

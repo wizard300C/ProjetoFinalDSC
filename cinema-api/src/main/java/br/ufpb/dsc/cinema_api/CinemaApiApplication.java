@@ -19,7 +19,6 @@ public class CinemaApiApplication {
 		return new ModelMapper();
 	}
 
-	@Bean
 	public static void main(String[] args) {
 		SpringApplication.run(CinemaApiApplication.class, args);
 	}
