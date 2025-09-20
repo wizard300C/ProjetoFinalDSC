@@ -24,11 +24,11 @@ public class Sessao {
     private LocalDateTime horario;
 
     @ManyToOne
-    @JoinColumn(name = "filme_id")
+    @JoinColumn(name = "filme_id", nullable = false)
     private Filme filme;
 
     @ManyToOne
-    @JoinColumn(name = "sala_id")
+    @JoinColumn(name = "sala_id", nullable = false)
     private Sala sala;
 
     @OneToMany(mappedBy = "sessao")

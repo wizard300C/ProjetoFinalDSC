@@ -17,7 +17,9 @@ public class SessaoDTO {
     @NotNull(message = "O horário da sessão não pode ser nulo!")
     private LocalDateTime horario;
 
+    @NotNull(message = "O filme não pode ser nulo!")
     private Filme filme;
 
+    @NotNull(message = "A sala não pode ser nula!")
     private Sala sala;
 }
