@@ -19,7 +19,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping(path = "api/cinema")
 @Validated
-public class UsuarioController {
+public class
+UsuarioController {
 
     private UsuarioService usuarioService;
     private ModelMapper modelMapper;

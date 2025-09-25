@@ -33,6 +33,11 @@ public class SessaoController {
         return convertToDTO(sessaoCriada);
     }
 
+    @DeleteMapping(path = "/sessoes/{sessaoID}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void removeSessao(@PathVariable Long sessaoID) {
+        sessaoService.removerSessao(sessaoID);
+    }
 
     private SessaoDTO convertToDTO(Sessao sessao) {
         return modelMapper.map(sessao, SessaoDTO.class);
