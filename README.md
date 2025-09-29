@@ -11,10 +11,10 @@ Configuração do Banco de Dados:
 - Criar Database no MySql: create database Cinema;
 - Configurar o application.properties:
 
-- spring.datasource.url=jdbc:mysql://localhost:3306/Cinema?useSSL=false&serverTimezone=UTC
-- spring.datasource.username=seu_usuario
-- spring.datasource.password=sua_senha
-- spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+  spring.datasource.url=jdbc:mysql://localhost:3306/Cinema?useSSL=false&serverTimezone=UTC
+  spring.datasource.username=seu_usuario
+  spring.datasource.password=sua_senha
+  spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
 Como Executar o Projeto
 
