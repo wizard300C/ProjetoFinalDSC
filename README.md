@@ -1,7 +1,5 @@
 # ProjetoFinalDSC
 
-Pré-requisitos
-
 Antes de executar o projeto, certifique-se de ter instalado:
 - Java 24
 - Maven
