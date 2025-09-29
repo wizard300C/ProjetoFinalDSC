@@ -2,9 +2,8 @@ package br.ufpb.dsc.cinema_api.dtos;
 
 import br.ufpb.dsc.cinema_api.models.enums.ClassificacaoIndicativa;
 import br.ufpb.dsc.cinema_api.models.enums.Genero;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import br.ufpb.dsc.cinema_api.validation.DuracaoValida;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -25,6 +24,12 @@ public class FilmeDTO {
 
     @NotNull(message = "O gênero do filme não pode ser nulo!")
     private Genero genero;
+
+    @NotNull(message = "A duração é obrigatória")
+    @Min(value = 1, message = "A duração mínima deve ser de 1 minuto")
+    @Max(value = 200, message = "A duração máxima deve ser de 200 minutos")
+    @DuracaoValida
+    private Integer duracao;
 
     @NotNull(message = "A classificação indicativa não pode ser nula!")
     private ClassificacaoIndicativa classificacaoIndicativa;

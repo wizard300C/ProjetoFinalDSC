@@ -1,7 +1,5 @@
 package br.ufpb.dsc.cinema_api.dtos;
 
-import br.ufpb.dsc.cinema_api.models.Sessao;
-import br.ufpb.dsc.cinema_api.models.Usuario;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -11,8 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class IngressoDTO {
-
+public class IngressoResponseDTO {
     private Long ingressoID;
 
     @Positive(message = "O preço do ingresso não pode ser negativo!")
@@ -23,11 +20,4 @@ public class IngressoDTO {
     @Size(min = 4, message = "O nome do assento não pode ter mais de 4 caracteres")
     @NotNull
     private String assento;
-
-    @NotNull(message = "O usuário não pode ser nulo!")
-    private UsuarioPedidoDTO usuario;
-
-    @NotNull(message = "A sessão não pode ser nula!")
-    private SessaoResponseDTO sessao;
-
 }

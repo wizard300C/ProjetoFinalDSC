@@ -11,10 +11,15 @@ import java.util.Collection;
 
 @Data
 @NoArgsConstructor
-public class PedidoDTO {
-
+public class PedidoResponseDTO {
     private Long pedidoID;
 
     @NotNull
-    private Collection<ItemPedidoDTO> itens;
+    private LocalDateTime data;
+
+    @NotNull
+    private UsuarioPedidoDTO usuario;
+
+    @NotNull
+    private Collection<ItemPedidoResponseDTO> itens;
 }

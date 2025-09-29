@@ -21,7 +21,7 @@ public class ItemPedido {
     @Column(name = "precp_total")
     private Double precoTotal;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "produto_id")
     private Produto produto;
 

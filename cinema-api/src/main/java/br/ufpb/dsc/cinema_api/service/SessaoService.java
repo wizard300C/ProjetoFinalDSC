@@ -15,6 +15,7 @@ import br.ufpb.dsc.cinema_api.repositories.SessaoRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,6 +40,7 @@ public class SessaoService {
     public Sessao criarSessao(Long filmeID, Sessao sessao) {
         Filme filme = filmeRepository.findById(filmeID)
                 .orElseThrow(() -> new FilmeNotFoundException("O filme " + filmeID + " não foi encontrado"));
+
         Sala sala = salaRepository.findById(sessao.getSala().getSalaID())
                 .orElseThrow(() -> new SalaNotFoundException("Sala não encontrada!"));
 
@@ -47,19 +49,18 @@ public class SessaoService {
 
         Sessao sessaoSalva = sessaoRepository.save(sessao);
 
+        List<Ingresso> ingressos = new ArrayList<>();
         for (int i = 1; i <= sala.getCapacidade(); i++) {
-            Ingresso novoIngresso = new Ingresso();
-            novoIngresso.setSessao(sessaoSalva);
-            novoIngresso.setPreco(sessaoSalva.getPreco()); // O preço vem da sessão
-
-
-            novoIngresso.setAssento("A" + i);
-
-            novoIngresso.setStatus(StatusIngresso.DISPONIVEL); // O status inicial é sempre DISPONIVEL
-            novoIngresso.setUsuario(null); // Nenhum utilizador associado ainda
-
-            ingressoRepository.save(novoIngresso);
+            Ingresso ingresso = new Ingresso();
+            ingresso.setSessao(sessaoSalva);
+            ingresso.setPreco(sessaoSalva.getPreco());
+            ingresso.setAssento("A" + i); // você pode melhorar para filas reais
+            ingresso.setStatus(StatusIngresso.DISPONIVEL);
+            ingresso.setUsuario(null);
+            ingressos.add(ingresso);
         }
+
+        ingressoRepository.saveAll(ingressos);
 
         return sessaoSalva;
 

@@ -2,6 +2,7 @@ package br.ufpb.dsc.cinema_api.controllers;
 
 import br.ufpb.dsc.cinema_api.dtos.FilmeDTO;
 import br.ufpb.dsc.cinema_api.dtos.IngressoDTO;
+import br.ufpb.dsc.cinema_api.dtos.IngressoResponseDTO;
 import br.ufpb.dsc.cinema_api.models.Filme;
 import br.ufpb.dsc.cinema_api.models.Ingresso;
 import br.ufpb.dsc.cinema_api.models.Usuario;
@@ -47,20 +48,22 @@ public class IngressoController {
     @GetMapping(path = "/sessoes/{sessaoID}/ingressos")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("isAuthenticated()")
-    public List<IngressoDTO> listaTodosIngressosDisponiveis(@PathVariable Long sessaoID) {
+    public List<IngressoResponseDTO> listaTodosIngressosDisponiveis(@PathVariable Long sessaoID) {
         return ingressoService.ListarTodosIngressosDisponiveis(sessaoID)
                 .stream()
-                .map(this::convertToDTO)
+                .map(this::convertToResponseDTO)
                 .collect(Collectors.toList());
+    }
+
+    private IngressoResponseDTO convertToResponseDTO(Ingresso ingresso) {
+        return modelMapper.map(ingresso, IngressoResponseDTO.class);
     }
 
     private IngressoDTO convertToDTO(Ingresso ingresso) {
         return modelMapper.map(ingresso, IngressoDTO.class);
     }
 
-    private Ingresso convertToEntity(IngressoDTO ingressoDTO) {
-        return modelMapper.map(ingressoDTO, Ingresso.class);
-    }
+
 
 
 }

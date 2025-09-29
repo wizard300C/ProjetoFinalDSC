@@ -2,6 +2,7 @@ package br.ufpb.dsc.cinema_api.controllers;
 
 import br.ufpb.dsc.cinema_api.dtos.FilmeDTO;
 import br.ufpb.dsc.cinema_api.dtos.PedidoDTO;
+import br.ufpb.dsc.cinema_api.dtos.PedidoResponseDTO;
 import br.ufpb.dsc.cinema_api.models.Filme;
 import br.ufpb.dsc.cinema_api.models.ItemPedido;
 import br.ufpb.dsc.cinema_api.models.Pedido;
@@ -29,14 +30,15 @@ public class PedidoController {
     private ModelMapper modelMapper;
     private UsuarioService usuarioService;
 
-    public PedidoController(ModelMapper modelMapper, PedidoService pedidoService) {
+    public PedidoController(ModelMapper modelMapper, PedidoService pedidoService, UsuarioService usuarioService) {
         this.modelMapper = modelMapper;
         this.pedidoService = pedidoService;
+        this.usuarioService = usuarioService;
     }
 
     @GetMapping(path = "/pedidos")
     @PreAuthorize("hasRole('ADMIN')")
-    public List<PedidoDTO> listaTodosPedidos() {
+    public List<PedidoResponseDTO> listaTodosPedidos() {
         return pedidoService.listarTodosPedidos()
                 .stream()
                 .map(this::convertToDTO)
@@ -45,7 +47,7 @@ public class PedidoController {
 
     @GetMapping(path = "/usuarios/{usuarioID}/pedidos")
     @PreAuthorize("hasRole('ADMIN')")
-    public List<PedidoDTO> listaPedidosUsuario(@PathVariable Long usuarioID) {
+    public List<PedidoResponseDTO> listaPedidosUsuario(@PathVariable Long usuarioID) {
         return pedidoService.listarPedidosUsuario(usuarioID).stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
@@ -53,7 +55,7 @@ public class PedidoController {
 
     @GetMapping(path = "/pedidos/{pedidoID}")
     @PreAuthorize("hasRole('ADMIN')")
-    public PedidoDTO listaPedido(@PathVariable Long pedidoID) {
+    public PedidoResponseDTO listaPedido(@PathVariable Long pedidoID) {
         Pedido pedido = pedidoService.listarPedido(pedidoID);
         return convertToDTO(pedido);
     }
@@ -61,14 +63,14 @@ public class PedidoController {
     @PostMapping(path = "/pedidos")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("isAuthenticated()")
-    public PedidoDTO criarPedido(@Valid @RequestBody PedidoDTO dto, Authentication authentication) {
+    public PedidoResponseDTO criarPedido(@Valid @RequestBody PedidoDTO dto, Authentication authentication) {
         Usuario usuario = usuarioService.buscarPorNomeUsuario(authentication.getName());
 
-        List<ItemPedido> itens = dto.getItensPedidos().stream().map(itemDto -> {
+        List<ItemPedido> itens = dto.getItens().stream().map(itemDto -> {
             ItemPedido item = new ItemPedido();
             item.setQuantidade(itemDto.getQuantidade());
             br.ufpb.dsc.cinema_api.models.Produto produto = new br.ufpb.dsc.cinema_api.models.Produto();
-            produto.setProdutoID(itemDto.getProduto().getProdutoID());
+            produto.setProdutoID(itemDto.getProdutoId());
             item.setProduto(produto);
             return item;
         }).collect(Collectors.toList());
@@ -78,8 +80,8 @@ public class PedidoController {
         return convertToDTO(pedidoSalvo);
     }
 
-    private PedidoDTO convertToDTO(Pedido pedido) {
-        return modelMapper.map(pedido, PedidoDTO.class);
+    private PedidoResponseDTO convertToDTO(Pedido pedido) {
+        return modelMapper.map(pedido, PedidoResponseDTO.class);
     }
 
     private Pedido convertToEntity(PedidoDTO pedidoDTO) {

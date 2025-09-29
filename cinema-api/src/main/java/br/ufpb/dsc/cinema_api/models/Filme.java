@@ -39,8 +39,4 @@ public class Filme {
 
     @OneToMany(mappedBy = "filme")
     private Collection<Sessao> sessoes;
-
-
-
-
 }

@@ -1,5 +1,6 @@
 package br.ufpb.dsc.cinema_api.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,7 +28,8 @@ public class Pedido {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    @OneToMany(mappedBy = "pedido")
+    @OneToMany(mappedBy = "pedido", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Collection<ItemPedido> itens;
 
 }

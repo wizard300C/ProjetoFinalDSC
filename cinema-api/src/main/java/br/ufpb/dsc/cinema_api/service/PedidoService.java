@@ -56,7 +56,6 @@ public class PedidoService {
         Pedido pedido = new Pedido();
         pedido.setUsuario(usuario);
         pedido.setData(LocalDateTime.now());
-        pedidoRepository.save(pedido);
 
         List<ItemPedido> itensSalvos = itens.stream()
                 .map(item -> {
@@ -65,10 +64,15 @@ public class PedidoService {
                     item.setPedido(pedido);
                     item.setProduto(produto);
                     item.setPrecoTotal(produto.getPreco() * item.getQuantidade());
-                    return itemPedidoRepository.save(item);
+                    return item;
                 })
                 .collect(Collectors.toList());
+
         pedido.setItens(itensSalvos);
+
+        pedidoRepository.save(pedido);
+
+        itemPedidoRepository.saveAll(itensSalvos);
         return pedido;
     }
 
