@@ -24,4 +24,6 @@ Como Executar o Projeto
 1. Abrir o terminal na raiz do projeto.
 2. Compilar o projeto.
 3. A API estará disponivel na rota http://localhost:8080
+
+Para testar as rotas privadas crie um usuário ADMIN via MySQL, depois use a rota de trocar a senha para que ela seja encriptada no banco de dados.
    
