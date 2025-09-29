@@ -34,5 +34,6 @@ public class Sessao {
     @OneToMany(mappedBy = "sessao")
     private Collection<Ingresso> ingressos;
 
-
+    @Column(name = "preco")
+    private Double preco;
 }

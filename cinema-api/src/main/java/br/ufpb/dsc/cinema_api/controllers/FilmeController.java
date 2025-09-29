@@ -28,6 +28,7 @@ public class FilmeController {
     }
 
     @GetMapping(path = "/filmes")
+    @PreAuthorize("isAuthenticated()")
     public List<FilmeDTO> listaTodosFilmes() {
         return filmeService.listarTodosFilmes()
                 .stream()
@@ -36,13 +37,13 @@ public class FilmeController {
     }
 
     @DeleteMapping(path = "/filmes/{filmeID}")
-    @PreAuthorize("hasRole = 'ADMIN'")
+    @PreAuthorize("hasRole('ADMIN')")
     public void deletaFilme(@PathVariable Long filmeID) {
         filmeService.deletarFilme(filmeID);
     }
 
     @PostMapping(path = "/filmes")
-    @PreAuthorize("hasRole = 'ADMIN'")
+    @PreAuthorize("hasRole('ADMIN')")
     public FilmeDTO adicionaFilme(@Valid @RequestBody FilmeDTO filmeDTO) {
         Filme filme = convertToEntity(filmeDTO);
         Filme filmeCriado = filmeService.adicionarFilme(filme);
@@ -50,6 +51,7 @@ public class FilmeController {
     }
 
     @GetMapping(path = "/filmes/genero")
+    @PreAuthorize("isAuthenticated()")
     public List<FilmeDTO> listaFilmesGenero(@Valid @RequestParam("genero") Genero genero) {
         return filmeService.listarFilmesGenero(genero)
                 .stream()
@@ -58,13 +60,14 @@ public class FilmeController {
     }
 
     @GetMapping(path = "/filmes/nome")
+    @PreAuthorize("isAuthenticated()")
     public FilmeDTO listaFilmeNome(@Valid @RequestParam("nome") String nomeFilme) {
         Filme filme = filmeService.buscarFilmePorNome(nomeFilme);
         return convertToDTO(filme);
     }
 
     @PutMapping(path = "/filmes/{filmeID}")
-    @PreAuthorize("hasRole = 'ADMIN'")
+    @PreAuthorize("hasRole('ADMIN')")
     public FilmeDTO atualizaFilme(@PathVariable Long filmeID, @Valid @RequestBody FilmeDTO filmeDTO) {
         Filme filme = convertToEntity(filmeDTO);
         Filme filmeAtualizado = filmeService.atualizarFilme(filmeID, filme);
@@ -72,12 +75,14 @@ public class FilmeController {
     }
 
     @GetMapping(path = "/filmes/{filmeID}")
+    @PreAuthorize("isAuthenticated()")
     public FilmeDTO listaFilme(@PathVariable Long filmeID) {
         Filme filme = filmeService.listarFilme(filmeID);
         return convertToDTO(filme);
     }
 
     @GetMapping(path = "/filmes/classificacao")
+    @PreAuthorize("isAuthenticated()")
     public List<FilmeDTO> listaFilmesClassificacao(@Valid @RequestParam("classificacao")
                                                    ClassificacaoIndicativa classificacaoIndicativa) {
         return filmeService.listarFilmesClassificacaoIndicativa(classificacaoIndicativa)

@@ -1,9 +1,7 @@
 package br.ufpb.dsc.cinema_api.controllers;
 
-import br.ufpb.dsc.cinema_api.dtos.FilmeDTO;
 import br.ufpb.dsc.cinema_api.dtos.UsuarioDTO;
 import br.ufpb.dsc.cinema_api.dtos.UsuarioResponseDTO;
-import br.ufpb.dsc.cinema_api.models.Filme;
 import br.ufpb.dsc.cinema_api.models.Usuario;
 import br.ufpb.dsc.cinema_api.service.UsuarioService;
 import jakarta.validation.Valid;
@@ -31,6 +29,8 @@ UsuarioController {
     }
 
     @PostMapping(path = "/usuarios")
+    @PreAuthorize("hasRole('ADMIN')")
+    @ResponseStatus(HttpStatus.CREATED)
     public UsuarioResponseDTO criaUsuario(@Valid @RequestBody UsuarioDTO usuarioDTO) {
         Usuario usuario = convertToEntity(usuarioDTO);
         Usuario usuarioCriado = usuarioService.criarUsuario(usuario);
@@ -38,6 +38,8 @@ UsuarioController {
     }
 
     @PutMapping(path = "/usuarios/{usuarioID}")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasRole('ADMIN')")
     public UsuarioResponseDTO atualizaUsuario(@PathVariable Long usuarioID, @Valid @RequestBody UsuarioDTO usuarioDTO) {
         Usuario usuario = convertToEntity(usuarioDTO);
         Usuario usuarioAtualizado = usuarioService.atualizarUsuario(usuarioID, usuario);
@@ -45,14 +47,14 @@ UsuarioController {
     }
 
     @DeleteMapping(path = "/usuarios/{usuarioID}")
-    @PreAuthorize("hasRole = 'ADMIN'")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public void deletaUsuario(@PathVariable Long usuarioID) {
         usuarioService.deletarUsuario(usuarioID);
     }
 
     @GetMapping(path = "/usuarios")
-    @PreAuthorize("hasRole = 'ADMIN'")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<UsuarioResponseDTO> listaTodosUsuarios() {
         return usuarioService
                 .listarTodosUsuarios()
@@ -62,7 +64,7 @@ UsuarioController {
     }
 
     @GetMapping(path = "/usuarios/{usuarioID}")
-    @PreAuthorize("hasRole = 'ADMIN'")
+    @PreAuthorize("hasRole('ADMIN')")
     public UsuarioResponseDTO listaUsuario(@PathVariable Long usuarioID) {
         Usuario usuario = usuarioService.listarUsuario(usuarioID);
         return convertToResponseDTO(usuario);

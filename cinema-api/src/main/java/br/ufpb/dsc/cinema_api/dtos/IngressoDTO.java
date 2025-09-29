@@ -16,10 +16,12 @@ public class IngressoDTO {
     private Long ingressoID;
 
     @Positive(message = "O preço do ingresso não pode ser negativo!")
+    @NotNull
     private Double preco;
 
     @NotBlank(message = "O assento não pode estar vazio!")
-    @Size(min = 4, message = "O nome do assento não pode ter mais de 4 caractere")
+    @Size(min = 4, message = "O nome do assento não pode ter mais de 4 caracteres")
+    @NotNull
     private String assento;
 
     @NotNull(message = "O usuário não pode ser nulo!")

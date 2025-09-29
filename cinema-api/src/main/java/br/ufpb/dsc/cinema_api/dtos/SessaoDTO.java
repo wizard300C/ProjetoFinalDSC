@@ -3,6 +3,7 @@ package br.ufpb.dsc.cinema_api.dtos;
 import br.ufpb.dsc.cinema_api.models.Filme;
 import br.ufpb.dsc.cinema_api.models.Sala;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -22,4 +23,7 @@ public class SessaoDTO {
 
     @NotNull(message = "A sala não pode ser nula!")
     private Sala sala;
+
+    @Positive
+    private Double preco;
 }

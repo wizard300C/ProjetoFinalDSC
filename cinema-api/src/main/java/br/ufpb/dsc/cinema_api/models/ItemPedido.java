@@ -1,9 +1,13 @@
 package br.ufpb.dsc.cinema_api.models;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "tb_itens_pedidos")
+@Data
+@NoArgsConstructor
 public class ItemPedido {
 
     @Id
@@ -20,4 +24,8 @@ public class ItemPedido {
     @ManyToOne
     @JoinColumn(name = "produto_id")
     private Produto produto;
+
+    @ManyToOne
+    @JoinColumn(name = "pedido_id")
+    private Pedido pedido;
 }

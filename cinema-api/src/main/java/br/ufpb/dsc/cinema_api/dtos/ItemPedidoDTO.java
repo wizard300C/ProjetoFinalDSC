@@ -1,5 +1,6 @@
 package br.ufpb.dsc.cinema_api.dtos;
 
+import br.ufpb.dsc.cinema_api.models.Pedido;
 import br.ufpb.dsc.cinema_api.models.Produto;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -12,11 +13,16 @@ public class ItemPedidoDTO {
     private Long itemPedidoID;
 
     @Positive(message = "A quantidade do produto não pode ser negativa!")
+    @NotNull(message = "A quantidade do produto não pode ser nula!")
     private Integer quantidade;
 
     @Positive(message = "O preço total não pode ser negativo!")
+    @NotNull(message = "O preço total não pode ser nulo!")
     private Double precoTotal;
 
     @NotNull(message = "O produto não pode ser nulo!")
     private Produto produto;
+
+    @NotNull(message = "O pedido não pode ser nulo!")
+    private Pedido pedido;
 }

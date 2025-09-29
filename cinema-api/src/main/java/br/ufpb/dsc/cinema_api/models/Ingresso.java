@@ -1,5 +1,6 @@
 package br.ufpb.dsc.cinema_api.models;
 
+import br.ufpb.dsc.cinema_api.models.enums.StatusIngresso;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,4 +31,7 @@ public class Ingresso {
     @ManyToOne
     @JoinColumn(name = "sessao_id")
     private Sessao sessao;
+
+    @Enumerated(EnumType.STRING)
+    private StatusIngresso status;
 }

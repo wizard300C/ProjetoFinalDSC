@@ -11,7 +11,7 @@ import java.util.List;
 public class ProdutoService {
     private ProdutoRepository produtoRepository;
 
-    public ProdutoService() {
+    public ProdutoService(ProdutoRepository produtoRepository) {
         this.produtoRepository = produtoRepository;
     }
 
@@ -45,7 +45,6 @@ public class ProdutoService {
         if (produto.getPreco() != null && produto.getPreco() > 0) {
             p.setPreco(produto.getPreco());
         }
-
         return produtoRepository.save(p);
     }
 }

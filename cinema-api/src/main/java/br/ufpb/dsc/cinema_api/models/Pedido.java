@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 
 @Entity
 @Table(name = "tb_pedidos")
@@ -26,6 +27,7 @@ public class Pedido {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-
+    @OneToMany(mappedBy = "pedido")
+    private Collection<ItemPedido> itens;
 
 }

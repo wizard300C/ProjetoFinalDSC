@@ -1,10 +1,7 @@
 package br.ufpb.dsc.cinema_api.controllers;
 
 import br.ufpb.dsc.cinema_api.dtos.SalaDTO;
-import br.ufpb.dsc.cinema_api.dtos.UsuarioDTO;
-import br.ufpb.dsc.cinema_api.dtos.UsuarioResponseDTO;
 import br.ufpb.dsc.cinema_api.models.Sala;
-import br.ufpb.dsc.cinema_api.models.Usuario;
 import br.ufpb.dsc.cinema_api.service.SalaService;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
@@ -28,7 +25,7 @@ public class SalaController {
     }
 
     @PostMapping(path = "/salas")
-    @PreAuthorize("hasRole = 'ADMIN'")
+    @PreAuthorize("hasRole('ADMIN')")
     public SalaDTO adicionaSala(@Valid @RequestBody SalaDTO salaDTO) {
         Sala sala = convertToEntity(salaDTO);
         Sala salaAdicionada = salaService.adicionarSala(sala);
@@ -36,13 +33,13 @@ public class SalaController {
     }
 
     @DeleteMapping(path = "/salas/{salaID}")
-    @PreAuthorize("hasRole = 'ADMIN'")
+    @PreAuthorize("hasRole('ADMIN')")
     public void removeSala(@PathVariable Long salaID) {
         salaService.removerSala(salaID);
     }
 
     @GetMapping(path = "/salas")
-    @PreAuthorize("hasRole = 'ADMIN'")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<SalaDTO> listaTodasSalas() {
         return salaService.listarTodasSalas()
                 .stream()
@@ -51,14 +48,14 @@ public class SalaController {
     }
 
     @GetMapping(path = "/salas/{salaID}")
-    @PreAuthorize("hasRole = 'ADMIN'")
+    @PreAuthorize("hasRole('ADMIN')")
     public SalaDTO listaSala(@PathVariable Long salaID) {
         Sala sala = salaService.listarSala(salaID);
         return convertToDTO(sala);
     }
 
     @PutMapping(path = "/salas/{salaID}")
-    @PreAuthorize("hasRole = 'ADMIN'")
+    @PreAuthorize("hasRole('ADMIN')")
     public SalaDTO atualizaSala(@PathVariable Long salaID, @Valid @RequestBody SalaDTO salaDTO) {
         Sala sala = convertToEntity(salaDTO);
         Sala salaAtualizada = salaService.atualizarSala(salaID, sala);

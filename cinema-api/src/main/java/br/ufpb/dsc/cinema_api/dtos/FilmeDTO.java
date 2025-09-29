@@ -15,10 +15,12 @@ public class FilmeDTO {
 
     @NotBlank(message = "o nome do filme não pode estar vazio!")
     @Size(max = 30, message = "O nome do filme não pode ter mais de 30 caracteres!")
+    @NotNull
     private String nomeFilme;
 
     @NotBlank(message = "A sinopse do filme não pode estar vazia!")
     @Size(max = 50, message = "A sinopse não pode ter mais de 50 caracteres!")
+    @NotNull
     private String sinopse;
 
     @NotNull(message = "O gênero do filme não pode ser nulo!")
